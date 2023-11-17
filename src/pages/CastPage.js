@@ -37,7 +37,7 @@ export default function CardPage() {
                 width="300px"
                 height="450px"
                 src=".../public/logo.png"
-               
+                alt="No_Photo"
               />
             )}
             <h2>{e.name}</h2>
