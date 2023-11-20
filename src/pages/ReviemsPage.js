@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getCast } from 'api/Api';
-import stubImage from '../images/stub.jpg'; 
+import { getReviews } from 'api/Api';
 
-export default function CardPage() {
+
+export default function ReviewsPage() {
   const { id } = useParams();
   const [films, setFilm] = useState(null);
 
   useEffect(() => {
-    const fetchCast = async () => {
+    const fetchReviews = async () => {
       try {
-        const movieDetails = await getCast(id);
+        const movieDetails = await getReviews(id);
         setFilm(movieDetails);
       } catch (error) {
         console.error('Error fetching movie details:', error);
       }
     };
 
-    fetchCast();
+    fetchReviews();
   }, [id]);
   console.log(films);
 
@@ -26,21 +26,7 @@ export default function CardPage() {
       {films && Array.isArray(films.cast) ? (
         films.cast.map(e => (
           <li key={e.id}>
-            {e.profile_path ? (
-              <img
-                width="300px"
-                height="450px"
-                src={`https://image.tmdb.org/t/p/w300/${e.profile_path}`}
-                alt={e.name}
-              />
-            ) : (
-              <img
-                width="300px"
-                height="300px"
-                src={stubImage}
-                alt="No_Photo"
-              />
-            )}
+            
             <h2>{e.name}</h2>
             <p>Character: {e.character}</p>
           </li>
