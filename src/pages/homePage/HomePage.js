@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { getTrending } from 'api/Api';
-import { Link } from 'react-router-dom';
+import { Block, FilmLink, List, Title } from './HomePage.sttyled';
+
 export default function HomePage() {
-    const [trendingData, setTrendingData] = useState([]);
-  console.log(trendingData.results);
+  const [trendingData, setTrendingData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -17,24 +17,23 @@ export default function HomePage() {
     fetchData();
   }, []);
 
-    return (
-      <ul>
+  return (
+    <Block>
+      <h1>Trending today</h1>
+        <List>
       {Array.isArray(trendingData.results) ? (
-        trendingData.results.map((e) => (
+        trendingData.results.map(e => (
           <li key={e.id}>
-            <Link to={`/movies/${e.id}`}>
-              <p>{e.title}</p>
-            </Link>
+            <FilmLink to={`/movies/${e.id}`}>
+              <Title>{e.title}</Title>
+            </FilmLink>
           </li>
         ))
       ) : (
         <li>No trending data available</li>
       )}
-    </ul>
-      );
+    </List>
+    </Block>
+
+  );
 }
-
-
-
-
-

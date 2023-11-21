@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getMovieDetails } from 'api/Api';
+import stubImage from '../../images/stub.jpg';
 import {
   Block,
   Btn,
   Container,
   FilmDetails,
+  LinkCastReviews,
+  List,
+  ListItem,
   Title,
-} from 'components/MovieCard/MovieKard.stily';
+} from './MovieCardPage.styled';
 
 export default function MovieCard() {
   const { id } = useParams();
@@ -37,10 +41,21 @@ export default function MovieCard() {
           <div>
             <Block>
               <div>
-                <img
-                  src={`https://image.tmdb.org/t/p/w300/${film.poster_path}`}
-                  alt={film.title}
-                />
+                {film.poster_path ? (
+                  <img
+                    width="300px"
+                    height="450px"
+                    src={`https://image.tmdb.org/t/p/w300/${film.poster_path}`}
+                    alt={film.title}
+                  />
+                ) : (
+                  <img
+                    width="300px"
+                    height="300px"
+                    src={stubImage}
+                    alt="No_Photo"
+                  />
+                )}
               </div>
               <FilmDetails>
                 <h1>
@@ -70,14 +85,16 @@ export default function MovieCard() {
       </Container>
       <Container>
         <Title>Additional information</Title>
-        <ul>
-          <li>
-            <Link to={`/movies/${id}/cast`}>Cast</Link>
-          </li>
-          <li>
-            <Link to={`/movies/${id}/reviews`}>Reviews</Link>
-          </li>
-        </ul>
+        <List>
+          <ListItem>
+            <LinkCastReviews to={`/movies/${id}/cast`}>Cast</LinkCastReviews>
+          </ListItem>
+          <ListItem>
+            <LinkCastReviews to={`/movies/${id}/reviews`}>
+              Reviews
+            </LinkCastReviews>
+          </ListItem>
+        </List>
       </Container>
     </div>
   );
