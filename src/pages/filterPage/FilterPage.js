@@ -53,7 +53,7 @@ export default function FilterPage() {
     if (filter !== '') {
       query(filter);
     }
-  }, []);
+  }, [filter]);
 
 
   return (
