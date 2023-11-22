@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { getMovieDetails } from 'api/Api';
 import stubImage from '../../images/stub.jpg';
 import {
@@ -30,10 +30,11 @@ export default function MovieCard() {
     fetchMovieDetails();
   }, [id]);
 
+  const location = useLocation()
   return (
     <div>
       <Container>
-        <Link to="/">
+        <Link to={location.state?.from || '/'}>
           <Btn type="button">&larr; Go back</Btn>
         </Link>
 
@@ -87,10 +88,10 @@ export default function MovieCard() {
         <Title>Additional information</Title>
         <List>
           <ListItem>
-            <LinkCastReviews to={`/movies/${id}/cast`}>Cast</LinkCastReviews>
+            <LinkCastReviews to={`/movies/${id}/cast`} state={{from: location}}>Cast</LinkCastReviews>
           </ListItem>
           <ListItem>
-            <LinkCastReviews to={`/movies/${id}/reviews`}>
+            <LinkCastReviews to={`/movies/${id}/reviews`} state={{from: location}}>
               Reviews
             </LinkCastReviews>
           </ListItem>

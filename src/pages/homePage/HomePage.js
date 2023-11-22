@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getTrending } from 'api/Api';
 import { Block, FilmLink, List, Title } from './HomePage.sttyled';
+import { useLocation } from 'react-router-dom';
 
 export default function HomePage() {
   const [trendingData, setTrendingData] = useState([]);
@@ -16,7 +17,7 @@ export default function HomePage() {
 
     fetchData();
   }, []);
-
+  const location = useLocation()
   return (
     <Block>
       <h1>Trending today</h1>
@@ -24,7 +25,7 @@ export default function HomePage() {
       {Array.isArray(trendingData.results) ? (
         trendingData.results.map(e => (
           <li key={e.id}>
-            <FilmLink to={`/movies/${e.id}`}>
+           <FilmLink to={`/movies/${e.id}`}  state={{from: location}}>
               <Title>{e.title}</Title>
             </FilmLink>
           </li>

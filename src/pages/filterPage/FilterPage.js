@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { getMovies } from 'api/Api';
 
 import {
@@ -15,24 +15,21 @@ import {
 export default function FilterPage() {
   const [queryResult, setQueryResult] = useState([]);
 
-
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useSearchParams();
   const filter = params.get('filter') ?? '';
 
-  
   const changeFilter = evt => {
-  
-    setParams({filter: evt.target.value})};
+    setParams({ filter: evt.target.value });
+  };
 
-    const handleSubmit = async event => {
-      event.preventDefault();
-      if (filter === '') {
-        alert('Please fill in the search field.');
-      } else {
-        await query(filter);
-      }
-     
-    };
+  const handleSubmit = async event => {
+    event.preventDefault();
+    if (filter === '') {
+      alert('Please fill in the search field.');
+    } else {
+      await query(filter);
+    }
+  };
 
   const query = async filter => {
     if (filter !== null) {
@@ -44,18 +41,15 @@ export default function FilterPage() {
         console.error('Error fetching movies:', error);
       }
     }
-   
-   
   };
-  
+
   useEffect(() => {
-  
     if (filter !== '') {
       query(filter);
     }
-  }, [filter]);
-
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const location = useLocation()
   return (
     <div className="SearchBar">
       <Container onSubmit={handleSubmit}>
@@ -64,9 +58,7 @@ export default function FilterPage() {
           onChange={changeFilter}
           placeholder="Search images and photos"
         />
-        <Btn type="submit">
-          Submit
-        </Btn>
+        <Btn type="submit">Submit</Btn>
       </Container>
       <Block>
         {queryResult.length === 0 ? (
@@ -75,7 +67,7 @@ export default function FilterPage() {
           <List>
             {queryResult.results.map(e => (
               <li key={e.id}>
-                <FilmLink to={`/movies/${e.id}`}>
+                <FilmLink to={`/movies/${e.id}`}  state={{from: location}}>
                   <Title>{e.title}</Title>
                 </FilmLink>
               </li>
@@ -86,4 +78,3 @@ export default function FilterPage() {
     </div>
   );
 }
-
