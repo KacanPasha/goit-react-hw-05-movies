@@ -1,12 +1,12 @@
-import CardPage from 'pages/castPage/CastPage';
-import FilterPage from 'pages/filterPage/FilterPage';
-
-import MovieCard from 'pages/movieCardPage/MovieKardCage';
-import React from 'react';
+import React, { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from './Layout/Layout';
-import HomePage from 'pages/homePage/HomePage';
-import ReviewsPage from 'pages/reviemsPage/ReviemsPage';
+
+const HomePage = lazy(() => import('pages/homePage/HomePage'));
+const FilterPage = lazy(() => import('pages/filterPage/FilterPage'));
+const MovieCard = lazy(() => import('pages/movieCardPage/MovieKardCage'));
+const CardPage = lazy(() => import('pages/castPage/CastPage'));
+const ReviewsPage = lazy(() => import('pages/reviemsPage/ReviemsPage'));
 
 export const App = () => {
   return (
