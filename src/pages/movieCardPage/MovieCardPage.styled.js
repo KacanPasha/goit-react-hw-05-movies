@@ -12,7 +12,7 @@ margin:16px;
 
 `;
 
-export const Btn = styled.button`
+export const GoBack = styled(Link)`
   background-color: rgba(255, 99, 71, 0.2);
   color: black;
   font-size: 20px;

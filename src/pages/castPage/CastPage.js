@@ -21,14 +21,15 @@ export default function CardPage() {
 
     fetchCast();
   }, [id]);
-  console.log(films);
 
   return (
     <div>
-     <MovieCard />
-
+      <MovieCard />
       <List>
-        {films && films.cast && Array.isArray(films.cast) && films.cast.length > 0 ? (
+        {films &&
+        films.cast &&
+        Array.isArray(films.cast) &&
+        films.cast.length > 0 ? (
           films.cast.map(e => (
             <li key={e.id}>
               {e.profile_path ? (

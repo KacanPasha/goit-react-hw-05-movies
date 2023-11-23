@@ -14,8 +14,10 @@ import {
 
 export default function FilterPage() {
   const [queryResult, setQueryResult] = useState([]);
+  const location = useLocation();
 
   const [params, setParams] = useSearchParams();
+  const [locationPath, setLocationPath] = useState(location);
   const filter = params.get('filter') ?? '';
 
   const changeFilter = evt => {
@@ -27,6 +29,7 @@ export default function FilterPage() {
     if (filter === '') {
       alert('Please fill in the search field.');
     } else {
+      setLocationPath(location);
       await query(filter);
     }
   };
@@ -49,7 +52,7 @@ export default function FilterPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const location = useLocation()
+
   return (
     <div className="SearchBar">
       <Container onSubmit={handleSubmit}>
@@ -67,7 +70,7 @@ export default function FilterPage() {
           <List>
             {queryResult.results.map(e => (
               <li key={e.id}>
-                <FilmLink to={`/movies/${e.id}`}  state={{from: location}}>
+                <FilmLink to={`/movies/${e.id}`} state={{ from: locationPath }}>
                   <Title>{e.title}</Title>
                 </FilmLink>
               </li>

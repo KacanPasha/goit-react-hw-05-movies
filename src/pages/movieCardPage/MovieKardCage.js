@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import { getMovieDetails } from 'api/Api';
 import stubImage from '../../images/stub.jpg';
 import {
   Block,
-  Btn,
   Container,
   FilmDetails,
+  GoBack,
   LinkCastReviews,
   List,
   ListItem,
@@ -30,13 +30,13 @@ export default function MovieCard() {
     fetchMovieDetails();
   }, [id]);
 
-  const location = useLocation()
+  const location = useLocation();
+
+  const locationRef = useRef(location.state?.from ?? '/')
   return (
     <div>
       <Container>
-        <Link to={location.state?.from || '/'}>
-          <Btn type="button">&larr; Go back</Btn>
-        </Link>
+        <GoBack to={locationRef.current}>&larr; Go back</GoBack>
 
         {film ? (
           <div>
@@ -88,10 +88,20 @@ export default function MovieCard() {
         <Title>Additional information</Title>
         <List>
           <ListItem>
-            <LinkCastReviews to={`/movies/${id}/cast`} state={{from: location}}>Cast</LinkCastReviews>
+            <LinkCastReviews
+              to={`/movies/${id}/cast`}
+              state = {{from: location.state?.from}}
+              
+            >
+              Cast
+            </LinkCastReviews>
           </ListItem>
           <ListItem>
-            <LinkCastReviews to={`/movies/${id}/reviews`} state={{from: location}}>
+            <LinkCastReviews
+              to={`/movies/${id}/reviews`}
+              state = {{from: location.state?.from}}
+             
+            >
               Reviews
             </LinkCastReviews>
           </ListItem>
